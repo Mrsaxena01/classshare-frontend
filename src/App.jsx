@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import UploadPage from './pages/UploadPage.jsx';
 import AccessPage from './pages/AccessPage.jsx';
+import api from './services/api.js';
 
 function App() {
     const [themeMode, setThemeMode] = useState(() => {
@@ -23,6 +24,10 @@ function App() {
         document.documentElement.dataset.theme = themeMode;
         window.localStorage.setItem('classshare-theme', themeMode);
     }, [themeMode]);
+
+    useEffect(() => {
+        api.get('/health').catch(() => {}); // fire-and-forget warm-up ping
+    }, []);
 
     const isDark = themeMode === 'dark';
 

@@ -89,15 +89,22 @@ function ShareResult({ result, onShareAnother }) {
                     </span>
                     <div className="flex items-center gap-1">
                         <Tooltip title="Open link in tab">
-                            <Button
-                                type="text"
-                                size="small"
-                                className="!text-[var(--body)] hover:!text-[var(--ink)] hover:!bg-[var(--hairline)] !h-7 !w-7 !flex !items-center !justify-center"
-                                icon={
-                                    <ExportOutlined style={{ fontSize: 13 }} />
-                                }
-                                onClick={() => window.open(shareLink, '_blank')}
-                            />
+                            <a
+                                href={shareLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Button
+                                    type="text"
+                                    size="small"
+                                    className="!text-[var(--body)] hover:!text-[var(--ink)] hover:!bg-[var(--hairline)] !h-7 !w-7 !flex !items-center !justify-center"
+                                    icon={
+                                        <ExportOutlined
+                                            style={{ fontSize: 13 }}
+                                        />
+                                    }
+                                />
+                            </a>
                         </Tooltip>
                         <Tooltip title="Copy link">
                             <Button

@@ -66,8 +66,15 @@ function UploadPage() {
             setResult(res.data);
             message.success('File shared successfully!');
         } catch (err) {
+            console.log('Upload error details:', {
+                message: err.message,
+                code: err.code,
+                response: err.response?.data,
+                status: err.response?.status,
+            });
             const errMsg =
-                err.response?.data?.error || 'Upload failed. Please try again.';
+                err.response?.data?.error ||
+                `${err.code || 'ERROR'}: ${err.message}`;
             message.error(errMsg);
         } finally {
             setUploading(false);

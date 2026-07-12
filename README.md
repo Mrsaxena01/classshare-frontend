@@ -1,16 +1,89 @@
-# React + Vite
+# LectureLink
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Share files instantly with a short access code. No login required.
 
-Currently, two official plugins are available:
+LectureLink solves a simple classroom problem: after a lecture, students want the slides or notes right away. Instead of hunting for a WhatsApp group, a teacher uploads the file here, gets a short code (like `CS7A92`), and writes it on the board. Students type the code into the site and download the file — done in under 30 seconds.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How it works
 
-## React Compiler
+1. **Upload** — drag and drop a file, choose Quick Share or Advanced Share, click Share
+2. **Get a code** — a short access code, a share link, and a QR code are generated instantly
+3. **Access** — students enter the code (and password, if set) to view file details and download
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Quick Share** uses sensible defaults: auto-generated code, no password, 24-hour expiry, unlimited downloads.
 
-## Expanding the ESLint configuration
+**Advanced Share** gives full control: custom access code, password protection, expiry time, max downloads, one-time download, hide/show filename, subject and notes.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Files delete themselves automatically once they expire — no manual cleanup required.
+
+## Tech stack
+
+**Frontend** (this repo)
+- React + Vite
+- Tailwind CSS
+- Ant Design
+- React Router
+- Axios
+
+**Backend** (separate repo)
+- Node.js + Express
+- Redis (temporary access-code metadata, with TTL-based auto-expiry)
+- Supabase Storage (file storage)
+
+## Getting started
+
+```bash
+npm install
+```
+
+Create a `.env` file in the project root:
+
+```
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+Run the dev server:
+
+```bash
+npm run dev
+```
+
+The app runs at `http://localhost:5173`.
+
+### Build for production
+
+```bash
+npm run build
+```
+
+Set `VITE_API_BASE_URL` in `.env.production` (or your hosting platform's environment variables) to your deployed backend URL before building.
+
+## Project structure
+
+```
+src/
+├── components/     # Reusable UI pieces (forms, code display, file details)
+├── pages/          # UploadPage, AccessPage
+├── services/       # API client (api.js)
+├── App.jsx         # Routes + theme provider
+├── main.jsx        # Entry point
+└── index.css       # Design tokens + Ant Design overrides
+```
+
+## Deployment
+
+This is a static single-page app. When deploying to Vercel, a `vercel.json` rewrite is required so direct links (e.g. `/access/CS7A92`) don't 404:
+
+```json
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+```
+
+Make sure the backend's `FRONTEND_URL` environment variable matches this app's deployed URL exactly (no trailing slash), or cross-origin requests will fail.
+
+## License
+
+Private project — not currently licensed for reuse.

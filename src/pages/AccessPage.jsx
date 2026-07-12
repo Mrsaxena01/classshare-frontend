@@ -89,7 +89,7 @@ function AccessPage() {
                 >
                     <div className="flex items-center justify-between border-b border-[var(--hairline)] pb-5 mb-6">
                         <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--hairline)] bg-[var(--canvas-elevated)] text-[13px] font-bold tracking-tighter text-[var(--ink)] shadow-sm">
-                            CS
+                            LL
                         </div>
                         <div className="flex items-center gap-1.5 rounded-full border border-[var(--hairline)] bg-[var(--canvas-elevated)]/60 p-1">
                             {[
